@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>jdc.plugins</groupId>
+        <artifactId>jdc-plugin-parent</artifactId>
+        <version>1.5</version>
+    </parent>
+    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jdc.plugins</groupId>
+    <artifactId>maven-dbtools-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <name>JDC Maven Plugins :: DBTools Plugin</name>
+    <version>1.8.7-SNAPSHOT</version>
+    <inceptionYear>2007</inceptionYear>
+        
+    <!-- deploy -->
+    <distributionManagement>
+        <site>
+            <id>soupbowl.site</id>
+            <name>Soupbowl Site</name>
+            <url>scp://www.soupbowl.net/srv/www/soupbowl.net/htdocs/dev/sites/plugins/dbtools</url>
+        </site>
+    </distributionManagement>
+    
+    <dependencies>
+        <dependency>
+            <groupId>jdc</groupId>
+            <artifactId>dbtools</artifactId>
+            <version>1.8.7-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>
