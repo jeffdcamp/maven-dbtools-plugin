@@ -3,7 +3,7 @@
     <parent>
         <groupId>jdc.plugins</groupId>
         <artifactId>jdc-plugin-parent</artifactId>
-        <version>1.5</version>
+        <version>1.7.0</version>
     </parent>
     
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,12 @@
     <name>JDC Maven Plugins :: DBTools Plugin</name>
     <version>1.8.7-SNAPSHOT</version>
     <inceptionYear>2007</inceptionYear>
-        
+
+    <scm>
+        <connection>scm:git:file://${basedir}</connection>
+        <developerConnection>scm:git:file://${basedir}</developerConnection>
+    </scm>
+    
     <!-- deploy -->
     <distributionManagement>
         <site>
