@@ -62,6 +62,13 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
      */
     private boolean includeXMLSupport = false;
     
+    /**
+     * Add spring Transactional annotations to CRUD methods in BaseManager
+     *
+     * @parameter default-value="false"
+     */
+    private boolean springSupport = false;
+    
     
     /**
      * Name of the base package that should be used for generated files.  This
@@ -172,6 +179,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
                     oBuilder.setProperty("genLocalInterface", genLocalInterface);
                     oBuilder.setProperty("genRemoteInterface", genRemoteInterface);
                     oBuilder.setIncludeXMLSupport(includeXMLSupport);
+                    oBuilder.setSpringSupport(springSupport);
                     
                     gObjBuilder.setObjectBuilder(oBuilder);
                     getLog().info("Using custom renderer ["+ rendererClasspath +"]");
@@ -204,6 +212,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
             }
 
             jpaOB.setIncludeXMLSupport(includeXMLSupport);
+            jpaOB.setSpringSupport(springSupport);
             gObjBuilder.setObjectBuilder(jpaOB);
             
         }
