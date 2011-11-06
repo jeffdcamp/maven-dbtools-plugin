@@ -9,7 +9,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import java.io.File;
 
 /**
- * Goal which creates JPA entities based on an DBTools schema.xml file
+ * Goal which creates database classes based on an DBTools schema.xml file
  *
  * @goal genclasses
  * @phase generate-sources
@@ -119,11 +119,11 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     @Override
     public void execute() throws MojoExecutionException {
         if (!skip) {
-            getLog().info("Generating JPA Entities...");
+            getLog().info("Generating classes...");
             verifyParameters();
             genClasses();
         } else {
-            getLog().info("SKIPPING Generating JPA Entities.");
+            getLog().info("SKIPPING Database classes.");
         }
     }
     
@@ -238,6 +238,6 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         
         // show results
         int filesGenerated = gObjBuilder.getObjectBuilder().getNumberFilesGenerated();
-        getLog().info("Generated ["+ filesGenerated +"] JPA Entities.");
+        getLog().info("Generated ["+ filesGenerated +"] files.");
     }
 }
