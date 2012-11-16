@@ -123,7 +123,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
             verifyParameters();
             genClasses();
         } else {
-            getLog().info("SKIPPING SchemaDatabase classes.");
+            getLog().info("SKIPPING Database classes.");
         }
     }
     
