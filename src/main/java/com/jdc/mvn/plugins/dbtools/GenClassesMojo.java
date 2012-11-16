@@ -123,7 +123,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
             verifyParameters();
             genClasses();
         } else {
-            getLog().info("SKIPPING Database classes.");
+            getLog().info("SKIPPING SchemaDatabase classes.");
         }
     }
     
@@ -204,9 +204,9 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
             JPADBObjectBuilder jpaOB= new JPADBObjectBuilder();
 
             if (!useJavaEE) {
-                jpaOB.setManagerType(JPAManagerType.JavaSE);
+                jpaOB.setManagerType(JPAManagerType.JAVASE);
             } else {
-                jpaOB.setManagerType(JPAManagerType.JavaEE);
+                jpaOB.setManagerType(JPAManagerType.JAVAEE);
                 jpaOB.setJeeLocalInterface(genLocalInterface);
                 jpaOB.setJeeRemoteInterface(genRemoteInterface);
             }
