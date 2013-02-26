@@ -69,7 +69,14 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
      */
     private boolean springSupport = false;
     
-    
+    /**
+     * Use JSR 310 DateTime (using Joda)
+     *
+     * @parameter default-value="false"
+     */
+    private boolean useDateTime = false;
+
+
     /**
      * Name of the base package that should be used for generated files.  This
      * package name is a base to the packages that will be generated
@@ -180,11 +187,12 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
                     oBuilder.setProperty("genRemoteInterface", genRemoteInterface);
                     oBuilder.setIncludeXMLSupport(includeXMLSupport);
                     oBuilder.setSpringSupport(springSupport);
+                    oBuilder.setUseDateTime(useDateTime);
                     
                     gObjBuilder.setObjectBuilder(oBuilder);
                     getLog().info("Using custom renderer ["+ rendererClasspath +"]");
-                    
-                    
+
+
                 } else {
                     throw new MojoExecutionException("Could not cast renderer ["+ rendererClasspath +"] to DBObjectBuilder");
                 }
