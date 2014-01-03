@@ -13,7 +13,7 @@
     <packaging>maven-plugin</packaging>
     <name>DBTools Maven Plugin</name>
     <description>DBTools Maven Plugion</description>
-    <url>https://github.com/jeffdcamp/dbtools-gen</url>
+    <url>https://github.com/jeffdcamp/maven-dbtools-plugin</url>
     <licenses>
         <license>
             <name>Apache License Version 2.0</name>
@@ -30,7 +30,7 @@
     </scm>
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/jeffdcamp/dbtools-gen/issues</url>
+        <url>https://github.com/jeffdcamp/maven-dbtools-plugin/issues</url>
     </issueManagement>
 
     <developers>
