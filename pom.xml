@@ -1,44 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>jdc.plugins</groupId>
-        <artifactId>jdc-plugin-parent</artifactId>
-        <version>1.7.5</version>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>jdc.plugins</groupId>
+    <groupId>org.dbtools</groupId>
     <artifactId>maven-dbtools-plugin</artifactId>
+    <version>1.4.10-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
-    <name>JDC Maven Plugins :: DBTools Plugin</name>
-    <version>2.6.4-SNAPSHOT</version>
+    <name>DBTools Maven Plugin</name>
+    <description>DBTools Maven Plugion</description>
+    <url>https://github.com/jeffdcamp/dbtools-gen</url>
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <inceptionYear>2007</inceptionYear>
 
     <scm>
-        <connection>scm:git:file://${basedir}</connection>
-        <developerConnection>scm:git:file://${basedir}</developerConnection>
+        <url>https://github.com/jeffdcamp/maven-dbtools-plugin</url>
+        <connection>scm:git:git://github.com/jeffdcamp/maven-dbtools-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jeffdcamp/maven-dbtools-plugin.git</developerConnection>
     </scm>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/jeffdcamp/dbtools-gen/issues</url>
+    </issueManagement>
 
-    <repositories>
-        <repository>
-            <id>soupbowl.nexus</id>
-            <name>Soupbowl Nexus Mirror</name>
-            <url>http://www.soupbowl.net/nexus/content/groups/public</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>soupbowl.nexus</id>
-            <name>Soupbowl Nexus Mirror</name>
-            <url>http://www.soupbowl.net/nexus/content/groups/public</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <developers>
+        <developer>
+            <id>jcampbell</id>
+            <name>Jeff Campbell</name>
+            <email>jeffdcamp@gmail.com</email>
+            <organization>DBTools</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>-7</timezone>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <target.jdk>1.6</target.jdk>
+    </properties>
+
+    <prerequisites>
+        <maven>3.0.5</maven>
+    </prerequisites>
 
     <dependencies>
         <dependency>
-            <groupId>jdc</groupId>
-            <artifactId>dbtools</artifactId>
-            <version>2.6.3</version>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dbtools</groupId>
+            <artifactId>dbtools-gen</artifactId>
+            <version>1.4.10-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${target.jdk}</source>
+                    <target>${target.jdk}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

@@ -1,10 +1,9 @@
 package com.jdc.mvn.plugins.dbtools;
 
-import com.jdc.db.objects.DBObjectBuilder;
-import com.jdc.db.objects.GroupObjectBuilder;
-import com.jdc.db.objects.jpa.JPADBObjectBuilder;
-import com.jdc.db.objects.jpa.JPADBObjectBuilder.JPAManagerType;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.dbtools.gen.DBObjectBuilder;
+import org.dbtools.gen.GroupObjectBuilder;
+import org.dbtools.gen.jpa.JPADBObjectBuilder;
 
 import java.io.File;
 
@@ -212,15 +211,16 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
             JPADBObjectBuilder jpaOB= new JPADBObjectBuilder();
 
             if (!useJavaEE) {
-                jpaOB.setManagerType(JPAManagerType.JAVASE);
+                jpaOB.setManagerType(JPADBObjectBuilder.JPAManagerType.JAVASE);
             } else {
-                jpaOB.setManagerType(JPAManagerType.JAVAEE);
+                jpaOB.setManagerType(JPADBObjectBuilder.JPAManagerType.JAVAEE);
                 jpaOB.setJeeLocalInterface(genLocalInterface);
                 jpaOB.setJeeRemoteInterface(genRemoteInterface);
             }
 
             jpaOB.setIncludeXMLSupport(includeXMLSupport);
             jpaOB.setSpringSupport(springSupport);
+            jpaOB.setUseDateTime(useDateTime);
             gObjBuilder.setObjectBuilder(jpaOB);
             
         }

@@ -1,7 +1,7 @@
 package com.jdc.mvn.plugins.dbtools;
 
-import com.jdc.db.schema.SchemaRenderer;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.dbtools.schema.SchemaRenderer;
 
 import java.io.File;
 

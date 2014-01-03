@@ -1,13 +1,12 @@
 package com.jdc.mvn.plugins.dbtools;
 
-import com.jdc.db.DBToolsFrame;
 import org.apache.maven.plugin.MojoExecutionException;
 
 
 /**
  * Goal which launches DBTools
  *
- * @goal launch
+// * @goal launch
  * @author <a href="mailto:jeff@soupbowl.net">Jeff Campbell</a>
  * @version $Id$
  *
@@ -15,8 +14,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 public class LaunchDBToolsMojo extends AbstractDBToolsMojo {
     
     public void execute() throws MojoExecutionException {
-        DBToolsFrame.main(null);
-        waitIndefinitely();
+//        DBToolsFrame.main(null);
+//        waitIndefinitely();
     }
     
     /**
