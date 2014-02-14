@@ -2,19 +2,18 @@ package com.jdc.mvn.plugins.dbtools;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.dbtools.gen.DBObjectBuilder;
-import org.dbtools.gen.GroupObjectBuilder;
-import org.dbtools.gen.jpa.JPADBObjectBuilder;
+import org.dbtools.gen.android.AndroidObjectBuilder;
+import org.dbtools.gen.jpa.JPAObjectBuilder;
 
 import java.io.File;
 
 /**
  * Goal which creates database classes based on an DBTools schema.xml file
  *
- * @goal genclasses
- * @phase generate-sources
  * @author <a href="mailto:jeff@soupbowl.net">Jeff Campbell</a>
  * @version $Id$
- *
+ * @goal genclasses
+ * @phase generate-sources
  */
 public class GenClassesMojo extends AbstractDBToolsMojo {
     /**
@@ -23,57 +22,41 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
      * @parameter expression="${basedir}/src/main/java"
      */
     private String outputSrcDir;
-    
+
     /**
      * Based directory where the test source files will be generated.
      *
      * @parameter expression="${basedir}/src/test/java"
-     * \     */
+     */
     private String outputTestSrcDir;
-    
-    /**
-     * Build JEE entities for use in JEE Application Server (such as JBoss).
-     * Default is to build JSE JPA entities for use in JSE Applications (such
-     * as Tomcat, Java Desktop, etc)
-     *
-     * @parameter default-value="false"
-     */
-    private boolean useJavaEE = false;
-    
-    /**
-     * If useJavaEE == true, create a local interface to StatlessSessionBean Manager
-     *
-     * @parameter default-value="true"
-     */
-    private boolean genLocalInterface = true;
-    
-    /**
-     * If useJavaEE == true, create a remote interface to StatlessSessionBean Manager
-     *
-     * @parameter default-value="false"
-     */
-    private boolean genRemoteInterface = true;
 
     /**
-     * If includeXMLSupport == true, all entities will include a dom4j toXML() xml constructor
+     * Type of application: JPA, ANDROID
      *
-     * @parameter default-value="false"
+     * @parameter default-value="JPA"
      */
-    private boolean includeXMLSupport = false;
-    
+    private String type = "JPA";
+
     /**
      * Add spring Transactional annotations to CRUD methods in BaseManager
      *
      * @parameter default-value="false"
      */
     private boolean springSupport = false;
-    
+
     /**
      * Use JSR 310 DateTime (using Joda)
      *
      * @parameter default-value="false"
      */
-    private boolean useDateTime = false;
+    private boolean dateTimeSupport = false;
+
+    /**
+     * Use CDI Dependency Injection
+     *
+     * @parameter default-value="false"
+     */
+    private boolean injectionSupport = false;
 
 
     /**
@@ -88,7 +71,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
      * @required
      */
     private String basePackageName;
-    
+
     /**
      * Generate default unit tests to test generate classes.  This may be useful
      * to help increase code coverage tests.
@@ -96,32 +79,32 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
      * @parameter default-value="false"
      */
     private boolean genUnitTests = false;
-    
+
     /**
      * Skip code generation
      *
      * @parameter default-value="false"
      */
     private boolean skip = false;
-    
+
     /**
      * Classpath of the renderer to use to generate objects.  If not specified,
      * then the default renderer is used.  Include the dependency jar file for
      * the classpath item:
+     * <p/>
+     * <!--jar file that has the renderer -->
+     * <dependencies>
+     * <dependency>
+     * <groupId>mygroup</groupId>
+     * <artifactId>myartifact</artifactId>
+     * <version>1.0</version>
+     * </dependency>
+     * </dependencies>
      *
-     *           <!--jar file that has the renderer -->
-     *           <dependencies>
-     *               <dependency>
-     *                   <groupId>mygroup</groupId>
-     *                   <artifactId>myartifact</artifactId>
-     *                   <version>1.0</version>
-     *               </dependency>
-     *           </dependencies>
-     *
-     *  @parameter
+     * @parameter
      */
     private String rendererClasspath = null;
-    
+
     @Override
     public void execute() throws MojoExecutionException {
         if (!skip) {
@@ -132,120 +115,69 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
             getLog().info("SKIPPING Database classes.");
         }
     }
-    
+
     private void verifyParameters() throws MojoExecutionException {
         File schemaFile = new File(getSchemaFullFilename());
         if (!schemaFile.exists()) {
-            throw new MojoExecutionException("Could not find file: "+ getSchemaFullFilename());
+            throw new MojoExecutionException("Could not find file: " + getSchemaFullFilename());
         }
     }
-    
+
     private String getPathFromPackage(String baseDir, String packageName) {
         String path = baseDir;
-        
+
         if (!path.endsWith("\\") && !path.endsWith("/")) {
             path += "/";
         }
-        
+
         for (char c : packageName.toCharArray()) {
             switch (c) {
-            case '.':
-                path += '/';
-                break;
-            default:
-                path += c;
+                case '.':
+                    path += '/';
+                    break;
+                default:
+                    path += c;
             }
-            
+
         }
-        
+
         return path;
     }
-    
+
     private void genClasses() throws MojoExecutionException {
-        GroupObjectBuilder gObjBuilder = new GroupObjectBuilder();
+        DBObjectBuilder builder;
 
-        if (rendererClasspath != null) {
-            getLog().info("Using Custom Renderer: "+ rendererClasspath);
-        } else {
-            getLog().info("Using DBTools Renderer");
+        switch (type) {
+            default:
+            case "JPA":
+                builder = new JPAObjectBuilder();
+                break;
+            case "ANDROID":
+                builder = new AndroidObjectBuilder();
         }
-        
-        // load custom renderer (if requested) otherwise use the default JPA Renderer
-        if (rendererClasspath != null && rendererClasspath.length() != 0) {
-            try {
-                Class c = this.getClass().getClassLoader().loadClass(rendererClasspath);
-                Object o = c.newInstance();
-                
-                getLog().info("Renderer Object: "+ o);
-                
-                if (o instanceof DBObjectBuilder) {
-                    DBObjectBuilder oBuilder = (DBObjectBuilder) o;
-                    
-                    oBuilder.setProperty("useJavaEE", useJavaEE);
-                    oBuilder.setProperty("genLocalInterface", genLocalInterface);
-                    oBuilder.setProperty("genRemoteInterface", genRemoteInterface);
-                    oBuilder.setIncludeXMLSupport(includeXMLSupport);
-                    oBuilder.setSpringSupport(springSupport);
-                    oBuilder.setUseDateTime(useDateTime);
-                    
-                    gObjBuilder.setObjectBuilder(oBuilder);
-                    getLog().info("Using custom renderer ["+ rendererClasspath +"]");
 
+        builder.setDateTimeSupport(dateTimeSupport);
+        builder.setInjectionSupport(injectionSupport);
+        builder.setSpringSupport(springSupport);
 
-                } else {
-                    throw new MojoExecutionException("Could not cast renderer ["+ rendererClasspath +"] to DBObjectBuilder");
-                }
-                
-            } catch (IllegalAccessException iaex) {
-                getLog().error("Error accessing renderer class ["+ rendererClasspath +"].", iaex);
-                throw new MojoExecutionException("Could create renderer ["+ rendererClasspath +"]", iaex);
-            } catch (InstantiationException inex) {
-                getLog().error("Error creating renderer class ["+ rendererClasspath +"].", inex);
-                throw new MojoExecutionException("Could create renderer ["+ rendererClasspath +"]", inex);
-            } catch (ClassNotFoundException ex) {
-                getLog().error("Error finding specified renderer class ["+ rendererClasspath +"]\n be sure to include the dependency in the plugin (see plug-in doc)", ex);
-                throw new MojoExecutionException("Could create renderer ["+ rendererClasspath +"]", ex);
-            }
-        } else {
-            // Default JPA Renderer
-            JPADBObjectBuilder jpaOB= new JPADBObjectBuilder();
-
-            if (!useJavaEE) {
-                jpaOB.setManagerType(JPADBObjectBuilder.JPAManagerType.JAVASE);
-            } else {
-                jpaOB.setManagerType(JPADBObjectBuilder.JPAManagerType.JAVAEE);
-                jpaOB.setJeeLocalInterface(genLocalInterface);
-                jpaOB.setJeeRemoteInterface(genRemoteInterface);
-            }
-
-            jpaOB.setIncludeXMLSupport(includeXMLSupport);
-            jpaOB.setSpringSupport(springSupport);
-            jpaOB.setUseDateTime(useDateTime);
-            gObjBuilder.setObjectBuilder(jpaOB);
-            
-        }
-        
         // schema file
-        gObjBuilder.setXmlFilename(getSchemaFullFilename());
-        
+        builder.setXmlFilename(getSchemaFullFilename());
+
         // tables to build objects for
-        gObjBuilder.setTables(null); // means all
-        
+        builder.setTables(null); // means all
+
         // output directory
         //File source = project.
-        gObjBuilder.setOutputBaseDir(getPathFromPackage(outputSrcDir, basePackageName));
-        if (genUnitTests) {
-            gObjBuilder.setTestOutputBaseDir(getPathFromPackage(outputTestSrcDir, basePackageName));
-        }
-        
+        builder.setOutputBaseDir(getPathFromPackage(outputSrcDir, basePackageName));
+
         // object information
-        gObjBuilder.setPackageBase(basePackageName);
-        
+        builder.setPackageBase(basePackageName);
+
         // GENERATE
-        gObjBuilder.build();
-        
+        builder.build();
+
         // show results
-        int filesGenerated = gObjBuilder.getObjectBuilder().getNumberFilesGenerated();
-        getLog().info("Generated ["+ filesGenerated +"] files.");
+        int filesGenerated = builder.getNumberFilesGenerated();
+        getLog().info("Generated [" + filesGenerated + "] files.");
     }
 }
