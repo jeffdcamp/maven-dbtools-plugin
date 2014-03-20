@@ -21,7 +21,7 @@ public class GenSQLMojo extends AbstractDBToolsMojo {
      *
      * @parameter expression="schema.sql"
      */
-    private String outputFilename;
+    private String outputFilename = "schema.sql";
     /**
      * Based directory where the sql file will be generated.
      *
