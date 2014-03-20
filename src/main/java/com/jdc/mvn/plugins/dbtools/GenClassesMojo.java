@@ -1,9 +1,9 @@
 package com.jdc.mvn.plugins.dbtools;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.dbtools.gen.DBObjectBuilder;
-import org.dbtools.gen.android.AndroidObjectBuilder;
-import org.dbtools.gen.jpa.JPAObjectBuilder;
+import org.dbtools.gen.DBObjectsBuilder;
+import org.dbtools.gen.android.AndroidObjectsBuilder;
+import org.dbtools.gen.jpa.JPAObjectsBuilder;
 
 import java.io.File;
 
@@ -57,6 +57,14 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
      * @parameter default-value="false"
      */
     private boolean injectionSupport = false;
+
+    /**
+     * Mobile ONLY
+     * Use SqlCipher
+     *
+     * @parameter default-value="false"
+     */
+    private boolean encryptionSupport = false;
 
 
     /**
@@ -145,19 +153,20 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     }
 
     private void genClasses() throws MojoExecutionException {
-        DBObjectBuilder builder;
+        DBObjectsBuilder builder;
 
         switch (type) {
             default:
             case "JPA":
-                builder = new JPAObjectBuilder();
+                builder = new JPAObjectsBuilder();
                 break;
             case "ANDROID":
-                builder = new AndroidObjectBuilder();
+                builder = new AndroidObjectsBuilder();
         }
 
         builder.setDateTimeSupport(dateTimeSupport);
         builder.setInjectionSupport(injectionSupport);
+        builder.setEncryptionSupport(encryptionSupport);
         builder.setSpringSupport(springSupport);
 
         // schema file
