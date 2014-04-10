@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.dbtools</groupId>
     <artifactId>maven-dbtools-plugin</artifactId>
-    <version>1.4.13-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>DBTools Maven Plugin</name>
     <description>DBTools Maven Plugion</description>
@@ -49,7 +49,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <target.jdk>1.6</target.jdk>
+        <target.jdk>1.7</target.jdk>
     </properties>
 
     <prerequisites>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.dbtools</groupId>
             <artifactId>dbtools-gen</artifactId>
-            <version>1.4.12</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
