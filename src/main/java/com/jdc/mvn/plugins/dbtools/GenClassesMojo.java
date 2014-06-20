@@ -38,11 +38,11 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private String type = "JPA";
 
     /**
-     * Add spring Transactional annotations to CRUD methods in BaseManager
+     * Add JEE/Spring Transactional annotations to CRUD methods in BaseManager
      *
-     * @parameter default-value="false"
+     * @parameter default-value="true"
      */
-    private boolean springSupport = false;
+    private boolean javaEESupport = true;
 
     /**
      * Use JSR 310 DateTime (using Joda)
@@ -54,9 +54,9 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     /**
      * Use CDI Dependency Injection
      *
-     * @parameter default-value="false"
+     * @parameter default-value="true"
      */
-    private boolean injectionSupport = false;
+    private boolean injectionSupport = true;
 
     /**
      * Mobile ONLY
@@ -167,7 +167,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         builder.setDateTimeSupport(dateTimeSupport);
         builder.setInjectionSupport(injectionSupport);
         builder.setEncryptionSupport(encryptionSupport);
-        builder.setSpringSupport(springSupport);
+        builder.setJavaeeSupport(javaEESupport);
 
         // schema file
         builder.setXmlFilename(getSchemaFullFilename());
