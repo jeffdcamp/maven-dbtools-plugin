@@ -59,6 +59,13 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean injectionSupport = true;
 
     /**
+     * If using multiple databases, it may be better to organize domain objects by database name
+     *
+     * @parameter default-value="false"
+     */
+    private boolean includeDatabaseNameInPackage = false;
+
+    /**
      * Mobile ONLY
      * Use SqlCipher
      *
@@ -168,6 +175,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         builder.setInjectionSupport(injectionSupport);
         builder.setEncryptionSupport(encryptionSupport);
         builder.setJavaeeSupport(javaEESupport);
+        builder.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
 
         // schema file
         builder.setXmlFilename(getSchemaFullFilename());
