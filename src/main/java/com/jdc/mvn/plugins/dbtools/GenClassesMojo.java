@@ -60,6 +60,13 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean injectionSupport = true;
 
     /**
+     * Use Otto Event Bus to subscribe to database changes
+     *
+     * @parameter default-value="false"
+     */
+    private boolean ottoSupport = false;
+
+    /**
      * If using multiple databases, it may be better to organize domain objects by database name
      *
      * @parameter default-value="false"
@@ -178,6 +185,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         genConfig.setEncryptionSupport(encryptionSupport);
         genConfig.setJavaeeSupport(javaEESupport);
         genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
+        genConfig.setOttoSupport(ottoSupport);
         builder.setGenConfig(genConfig);
 
         // schema file
