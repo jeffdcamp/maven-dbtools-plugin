@@ -2,6 +2,7 @@ package com.jdc.mvn.plugins.dbtools;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.dbtools.gen.DBObjectsBuilder;
+import org.dbtools.gen.GenConfig;
 import org.dbtools.gen.android.AndroidObjectsBuilder;
 import org.dbtools.gen.jpa.JPAObjectsBuilder;
 
@@ -171,11 +172,13 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
                 builder = new AndroidObjectsBuilder();
         }
 
-        builder.setDateTimeSupport(dateTimeSupport);
-        builder.setInjectionSupport(injectionSupport);
-        builder.setEncryptionSupport(encryptionSupport);
-        builder.setJavaeeSupport(javaEESupport);
-        builder.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
+        GenConfig genConfig = new GenConfig();
+        genConfig.setDateTimeSupport(dateTimeSupport);
+        genConfig.setInjectionSupport(injectionSupport);
+        genConfig.setEncryptionSupport(encryptionSupport);
+        genConfig.setJavaeeSupport(javaEESupport);
+        genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
+        builder.setGenConfig(genConfig);
 
         // schema file
         builder.setXmlFilename(getSchemaFullFilename());
