@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.dbtools</groupId>
             <artifactId>dbtools-gen</artifactId>
-            <version>2.3.0</version>
+            <version>2.5.0</version>
         </dependency>
     </dependencies>
 
