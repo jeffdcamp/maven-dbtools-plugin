@@ -74,15 +74,6 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean includeDatabaseNameInPackage = false;
 
     /**
-     * Mobile ONLY
-     * Use SqlCipher
-     *
-     * @parameter default-value="false"
-     */
-    private boolean encryptionSupport = false;
-
-
-    /**
      * Name of the base package that should be used for generated files.  This
      * package name is a base to the packages that will be generated
      * (example: com.company.data will produce the following com.company.data.object1,
@@ -182,7 +173,6 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         GenConfig genConfig = new GenConfig();
         genConfig.setDateTimeSupport(dateTimeSupport);
         genConfig.setInjectionSupport(injectionSupport);
-        genConfig.setEncryptionSupport(encryptionSupport);
         genConfig.setJavaeeSupport(javaEESupport);
         genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
         genConfig.setOttoSupport(ottoSupport);
