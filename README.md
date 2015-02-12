@@ -17,8 +17,8 @@ Usage
                     <basePackageName>org.project.wsj.domain</basePackageName>
                     <schemaDir>${basedir}/src/main/resources/db</schemaDir>
                     <dbVendor>derby</dbVendor>
-                    <useDateTime>true</useDateTime>
-                    <springSupport>true</springSupport>
+                    <dateTimeSupport>true</dateTimeSupport>
+                    <injectionSupport>true</injectionSupport>
                 </configuration>
             </plugin>
         </plugins>
@@ -28,7 +28,7 @@ Usage
 License
 -------
 
-    Copyright 2014 Jeff Campbell
+    Copyright 2015 Jeff Campbell
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
