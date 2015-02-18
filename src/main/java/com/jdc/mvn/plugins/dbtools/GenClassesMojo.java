@@ -41,9 +41,9 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     /**
      * Add JEE/Spring Transactional annotations to CRUD methods in BaseManager
      *
-     * @parameter default-value="true"
+     * @parameter default-value="false"
      */
-    private boolean javaEESupport = true;
+    private boolean javaEESupport = false;
 
     /**
      * Use JSR 310 DateTime (using Joda)
@@ -55,9 +55,9 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     /**
      * Use CDI Dependency Injection
      *
-     * @parameter default-value="true"
+     * @parameter default-value="false"
      */
-    private boolean injectionSupport = true;
+    private boolean injectionSupport = false;
 
     /**
      * Use Otto Event Bus to subscribe to database changes
