@@ -13,13 +13,6 @@ import org.dbtools.gen.DBToolsInit;
  */
 public class InitMojo extends AbstractDBToolsMojo {
     /**
-     * Based directory where the source files will be generated.
-     *
-     * @parameter expression="${basedir}/src/main/database"
-     */
-    private String databaseSrcDir;
-
-    /**
      * Skip code generation
      *
      * @parameter default-value="false"
@@ -47,7 +40,7 @@ public class InitMojo extends AbstractDBToolsMojo {
 
         DBToolsInit dbToolsInit = new DBToolsInit();
 
-        dbToolsInit.initDBTools(databaseSrcDir);
+        dbToolsInit.initDBTools(schemaDir);
 
         getLog().info("DBTools init complete");
     }

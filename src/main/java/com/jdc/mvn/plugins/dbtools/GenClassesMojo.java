@@ -67,6 +67,13 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean ottoSupport = false;
 
     /**
+     * Use jsr 305 (@Nullable, @Notnull, etc)
+     *
+     * @parameter default-value="true"
+     */
+    private boolean jsr305Support = true;
+
+    /**
      * If using multiple databases, it may be better to organize domain objects by database name
      *
      * @parameter default-value="false"
@@ -176,6 +183,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         genConfig.setJavaeeSupport(javaEESupport);
         genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
         genConfig.setOttoSupport(ottoSupport);
+        genConfig.setJsr305Support(jsr305Support);
         builder.setGenConfig(genConfig);
 
         // schema file

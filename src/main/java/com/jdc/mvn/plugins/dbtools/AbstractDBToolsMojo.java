@@ -14,7 +14,7 @@ public abstract class AbstractDBToolsMojo extends AbstractMojo {
     /**
      * Name of the directory where the schema file is located.
      *
-     * @parameter expression="${basedir}/src/main/db"
+     * @parameter expression="${basedir}/src/main/database"
      */
     protected String schemaDir;
     /**
