@@ -74,6 +74,13 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean jsr305Support = true;
 
     /**
+     * Use SQLQueryBuilder for generated queries
+     *
+     * @parameter default-value="false"
+     */
+    private boolean sqlQueryBuilderSupport = false;
+
+    /**
      * If using multiple databases, it may be better to organize domain objects by database name
      *
      * @parameter default-value="false"
@@ -184,6 +191,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
         genConfig.setOttoSupport(ottoSupport);
         genConfig.setJsr305Support(jsr305Support);
+        genConfig.setSqlQueryBuilderSupport(sqlQueryBuilderSupport);
         builder.setGenConfig(genConfig);
 
         // schema file
