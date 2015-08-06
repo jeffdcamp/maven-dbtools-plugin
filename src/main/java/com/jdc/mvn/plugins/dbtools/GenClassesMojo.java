@@ -60,11 +60,11 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean injectionSupport = false;
 
     /**
-     * Use Otto Event Bus to subscribe to database changes
+     * Use DBTools Event Bus to subscribe to database changes
      *
      * @parameter default-value="false"
      */
-    private boolean ottoSupport = false;
+    private boolean eventBusSupport = false;
 
     /**
      * Use jsr 305 (@Nullable, @Notnull, etc)
@@ -189,7 +189,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         genConfig.setInjectionSupport(injectionSupport);
         genConfig.setJavaeeSupport(javaEESupport);
         genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
-        genConfig.setOttoSupport(ottoSupport);
+        genConfig.setEventBusSupport(eventBusSupport);
         genConfig.setJsr305Support(jsr305Support);
         genConfig.setSqlQueryBuilderSupport(sqlQueryBuilderSupport);
         builder.setGenConfig(genConfig);
