@@ -67,6 +67,13 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean eventBusSupport = false;
 
     /**
+     * Use RxJava
+     *
+     * @parameter default-value="false"
+     */
+    private boolean rxJavaSupport = false;
+
+    /**
      * Use jsr 305 (@Nullable, @Notnull, etc)
      *
      * @parameter default-value="true"
@@ -190,6 +197,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         genConfig.setJavaeeSupport(javaEESupport);
         genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
         genConfig.setEventBusSupport(eventBusSupport);
+        genConfig.setRxJavaSupport(rxJavaSupport);
         genConfig.setJsr305Support(jsr305Support);
         genConfig.setSqlQueryBuilderSupport(sqlQueryBuilderSupport);
         builder.setGenConfig(genConfig);
