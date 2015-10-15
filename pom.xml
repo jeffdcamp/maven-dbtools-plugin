@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.dbtools</groupId>
     <artifactId>maven-dbtools-plugin</artifactId>
-    <version>4.0.2-SNAPSHOT</version>
+    <version>4.0.2</version>
     <packaging>maven-plugin</packaging>
     <name>DBTools Maven Plugin</name>
     <description>DBTools Maven Plugion</description>
