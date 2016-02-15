@@ -32,7 +32,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private String outputTestSrcDir;
 
     /**
-     * Type of application: JPA, ANDROID
+     * Type of application: JPA, ANDROID, ANDROID-KOTLIN
      *
      * @parameter default-value="JPA"
      */
@@ -46,11 +46,11 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private boolean javaEESupport = false;
 
     /**
-     * Use JSR 310 DateTime (using Joda)
+     * Type of date to use in the database: JAVA-DATE, JODA, JSR-310 (not yet supported)
      *
-     * @parameter default-value="false"
+     * @parameter default-value="JAVA-DATE"
      */
-    private boolean dateTimeSupport = false;
+    private String dateType = "JAVA-DATE";
 
     /**
      * Use CDI Dependency Injection
@@ -182,17 +182,7 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
     private void genClasses() throws MojoExecutionException {
         DBObjectsBuilder builder;
 
-        switch (type) {
-            default:
-            case "JPA":
-                builder = new JPAObjectsBuilder();
-                break;
-            case "ANDROID":
-                builder = new AndroidObjectsBuilder();
-        }
-
         GenConfig genConfig = new GenConfig();
-        genConfig.setDateTimeSupport(dateTimeSupport);
         genConfig.setInjectionSupport(injectionSupport);
         genConfig.setJavaeeSupport(javaEESupport);
         genConfig.setIncludeDatabaseNameInPackage(includeDatabaseNameInPackage);
@@ -200,7 +190,29 @@ public class GenClassesMojo extends AbstractDBToolsMojo {
         genConfig.setRxJavaSupport(rxJavaSupport);
         genConfig.setJsr305Support(jsr305Support);
         genConfig.setSqlQueryBuilderSupport(sqlQueryBuilderSupport);
-        builder.setGenConfig(genConfig);
+
+        switch (dateType) {
+            default:
+            case "JAVA-DATE":
+                genConfig.setDateType(GenConfig.DateType.JODA);
+                break;
+            case "JODA":
+                genConfig.setDateType(GenConfig.DateType.JODA);
+                break;
+            case "JSR-310":
+                genConfig.setDateType(GenConfig.DateType.JSR_310);
+                break;
+        }
+
+        switch (type) {
+            default:
+            case "JPA":
+                builder = new JPAObjectsBuilder(genConfig);
+                break;
+            case "ANDROID":
+                builder = new AndroidObjectsBuilder(genConfig);
+        }
+
 
         // schema file
         builder.setXmlFilename(getSchemaFullFilename());
